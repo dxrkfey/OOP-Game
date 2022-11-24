@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ActionListener;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 
@@ -51,13 +52,12 @@ public class PlayState extends JPanel{
         });
         time.start();
         repaint();
-        newX.start();
         runner.start();
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(drop.drop[2].getImage(), get.x,get.y,get.w,get.h,this); 
+        //g.drawImage(drop.drop[2].getImage(), get.x,get.y,get.w,get.h,this);
         if(d2==0){
             g.drawImage(bg1.getImage(), 0, 0, 1230, 700, this);
             g.setColor(Color.BLACK);
@@ -83,20 +83,20 @@ public class PlayState extends JPanel{
         } else if(me.count==1){
             g.drawImage(me.strun[me.count].getImage(), me.x, me.y, me.w, me.h, this);
         }else if(me.count<me.strun.length&&me.count>1){
-                if(me.count==2){
-                    me.w = 150;
-                    g.drawImage(me.strun[me.count].getImage(), me.x, me.y, me.w, me.h, this);
-                    me.w=110;
-                } if (me.count==3|me.count==5) {
-                    me.w = 150;
-                    g.drawImage(me.strun[me.count].getImage(), me.x, me.y, me.w, me.h, this);
-                    me.w=110;
-                } if (me.count==4) {
-                    me.w = 160;
-                    g.drawImage(me.strun[me.count].getImage(), me.x, me.y, me.w, me.h, this);
-                    me.w=110;
-                }
-                me.count++;
+            if(me.count==2){
+                me.w = 150;
+                g.drawImage(me.strun[me.count].getImage(), me.x, me.y, me.w, me.h, this);
+                me.w=110;
+            } if (me.count==3|me.count==5) {
+                me.w = 150;
+                g.drawImage(me.strun[me.count].getImage(), me.x, me.y, me.w, me.h, this);
+                me.w=110;
+            } if (me.count==4) {
+                me.w = 160;
+                g.drawImage(me.strun[me.count].getImage(), me.x, me.y, me.w, me.h, this);
+                me.w=110;
+            }
+            me.count++;
         }else {
             me.count=1;
             g.drawImage(me.strun[me.count].getImage(), me.x, me.y, me.w, me.h, this);
@@ -117,6 +117,7 @@ public class PlayState extends JPanel{
                             d2-=1000;
                         }
                     }
+                    System.out.println(d);
                     time.sleep(1000);
                 } catch (InterruptedException e) {
                 }
@@ -169,13 +170,27 @@ public class PlayState extends JPanel{
         }
     });
 
-    Thread newX = new Thread(new Runnable() {
+    Thread UpGrade = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            while(true){
+                try {
+                    get.x-=5;
+                    if(get.x<-50){
+                        get.x=950;
+                        get.y=430;
+                    }
+                    UpGrade.sleep(10);
+                } catch (InterruptedException e) {
+                }
+            }
+        }
+    });
+    Thread DownGrade = new Thread(new Runnable() {
         public void run() {
             while (true) {
                 try {
-                    if(me.x>=1220){
-                        me.x=-30;
-                    }
+                    drop.count++;
                     repaint();
                     Thread.sleep(50);
                 } catch (Exception e) {
@@ -184,4 +199,8 @@ public class PlayState extends JPanel{
             }
         }
     });
+
+    public boolean Intersect(Rectangle2D a, Rectangle2D b) {
+        return (a.intersects(b));
+    }
 }

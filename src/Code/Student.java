@@ -1,5 +1,6 @@
 package Code;
 import javax.swing.ImageIcon;
+import java.awt.geom.Rectangle2D;
 
 public class Student{
     public ImageIcon[] strun = new ImageIcon[6];
@@ -20,9 +21,9 @@ public class Student{
         for(int i=1;i<strun.length;i++){
             strun[i] = new ImageIcon(this.getClass().getResource("../image/"+i+".png"));
         }
-        /*for(int i=1;i<=stjump.length;i++){
-            stjump[i] = new ImageIcon(this.getClass().getResource("../image/jump"+i+".png"));
-        }*/
+    }
+    public Rectangle2D getbound() {
+        return (new Rectangle2D.Double(x, y, 45, 45));
     }
 }
 

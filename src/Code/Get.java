@@ -6,10 +6,10 @@ import java.awt.geom.Rectangle2D;
 
 public class Get {
     public ImageIcon[] get = new ImageIcon[3];
-    int x = 20;
-    int y = 100;
-    int w = 50;
-    int h = 50;
+    int x;
+    int y;
+    int w = 100;
+    int h = 90;
     int count = 1;
 
     Get(){

@@ -10,7 +10,6 @@ public class Playgame extends JFrame implements ActionListener{
     Home start = new Home();
     PlayState play = new PlayState();
     EndGame end = new EndGame();
-
     public Playgame() {
         this.setSize(1230,700);
         this.add(play);
